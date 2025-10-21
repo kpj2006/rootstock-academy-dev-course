@@ -184,52 +184,9 @@ jobs:
               body += '\n\n❌ No test output found. Something went wrong with the execution.';
             }
 
-            console.log('🔔 Commenting on PR...');
-            console.log('🔔 Comment body:', body);
-
             await github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
               body
             });
-            console.log('🔔 Comment posted successfully');
-
-      #8. Update Thinkific if all tests passed and mark course as completed 
-      # - name: Update Thinkific if all tests passed
-      #   if: success()
-      #   run: |
-      #     # 7A. Fetch Thinkific user_id by email or GitHub username
-      #     THINKIFIC_USER_ID=$(curl -s -X GET \
-      #       "https://api.thinkific.com/api/public/v1/users?query=${GITHUB_ACTOR}" \
-      #       -H "X-Auth-API-Key: ${{ secrets.THINKIFIC_API_KEY }}" \
-      #       -H "X-Auth-Subdomain: ${{ secrets.THINKIFIC_SUBDOMAIN }}" \
-      #       | jq '.items[0].id')
-
-      #     # 7B. Determine course_id based on MODULE
-      #     case "${MODULE}" in
-      #       module1)
-      #         COURSE_ID=123456
-      #         ;;
-      #       module2)
-      #         COURSE_ID=7891011
-      #         ;;
-      #       module3)
-      #         COURSE_ID=1121314
-      #         ;;
-      #       *)
-      #         echo "Unknown module: ${MODULE}"
-      #         exit 1
-      #         ;;
-      #     esac
-      
-      #     # 8C. Mark course as completed
-      #     curl -X POST "https://api.thinkific.com/api/public/v1/enrollments" \
-      #       -H "X-Auth-API-Key: ${{ secrets.THINKIFIC_API_KEY }}" \
-      #       -H "X-Auth-Subdomain: ${{ secrets.THINKIFIC_SUBDOMAIN }}" \
-      #       -H "Content-Type: application/json" \
-      #       -d '{
-      #         "user_id": "'"${THINKIFIC_USER_ID}"'",
-      #         "course_id": "'"${COURSE_ID}"'",
-      #         "completed_at": "'"$(date -Iseconds)"'"
-      #       }'
