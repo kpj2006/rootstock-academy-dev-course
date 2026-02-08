@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
 contract Cars {
@@ -17,12 +18,9 @@ contract Cars {
     constructor() {
     }
 
-    ___ addCar(
-        _________
-        _________
-    )
-        ___
-        returns(___ ___)
+    function addCar(bytes3 _colour, uint8 _doors)
+    public 
+    returns(uint256 carid)
     {
     }
 
